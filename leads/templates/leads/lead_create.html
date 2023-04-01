@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+{% extends "base.html" %}
 
-</head>
-<body>
-    <a href="/leads">Go back to leads</a>
+{% block content %}
+    <a href="{% url 'leads:lead-list' %}">Go back to leads</a>
     <hr />
     <h1>Create a new lead</h1>
     <form method="post" >
@@ -16,5 +9,4 @@
         {{ form.as_p }}
         <button type="submit">Submit</button>
     </form>
-</body>
-</html>  
+{% endblock content %}
