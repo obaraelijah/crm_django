@@ -6,6 +6,7 @@ from django.views import generic
 from django.core.mail import send_mail
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from agents.mixins import OrganisorandLoginRequiredMixin
 # crud + List
 
 class SignUpView(generic.CreateView):
@@ -28,7 +29,7 @@ class LeadDetailView(LoginRequiredMixin,generic.DetailView):
     queryset = Lead.objects.all()
     context_object_name = "lead"
 
-class LeadCreateView(LoginRequiredMixin,generic.CreateView):
+class LeadCreateView(OrganisorandLoginRequiredMixin,generic.CreateView):
     template_name = "leads/lead_create.html"
     form_class = LeadModelForm
     
@@ -44,7 +45,7 @@ class LeadCreateView(LoginRequiredMixin,generic.CreateView):
             recipient_list=["test2@test.com"]
         )
         return super(LeadCreateView, self).form_valid(form)
-class LeadUpdateView(LoginRequiredMixin, generic.UpdateView):
+class LeadUpdateView(OrganisorandLoginRequiredMixin, generic.UpdateView):
     template_name = "leads/lead_update.html"
     queryset = Lead.objects.all()
     form_class = LeadModelForm
@@ -52,7 +53,7 @@ class LeadUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         return reverse("leads:lead-list")
 
-class LeadDeleteView(generic.DeleteView):
+class LeadDeleteView(OrganisorandLoginRequiredMixin,generic.DeleteView):
     template_name = "leads/lead_delete.html"
     queryset = Lead.objects.all()
     
