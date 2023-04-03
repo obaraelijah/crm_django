@@ -73,6 +73,9 @@ class LeadCreateView(OrganisorandLoginRequiredMixin,generic.CreateView):
         return reverse("leads:lead-list")
 
     def form_valid(self, form):
+        lead = form.save(commit=False)
+        lead.organisation = self.request.user.userprofile
+        lead.save()
         # sending email
         send_mail(
             subject="A lead has been created",
@@ -187,8 +190,6 @@ class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
 class LeadCategoryUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "leads/lead_category_update.html"
     form_class = LeadCategoryUpdateForm
-    
-    
     
     def get_queryset(self):
          user = self.request.user
